@@ -1,0 +1,14 @@
+#!/bin/bash
+
+usage () {
+  echo "${0##*/}: <commit message>" >&2
+  exit 1 
+}
+
+# Test if commit message is given
+(( $# != 1 )) && usage
+
+# Add, commit and push
+git add -A
+git commit -m "$1"
+git push

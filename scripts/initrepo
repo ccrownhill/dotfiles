@@ -1,0 +1,8 @@
+#!/bin/bash
+repo_name="${PWD##*/}"
+git init
+git add -A
+git commit -m "first commit"
+git branch -M main
+gh repo create "$repo_name"
+git push -u origin main

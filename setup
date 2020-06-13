@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+ln -sf "$PWD/.bashrc" "$HOME/.bashrc"
+ln -sf "$PWD/.profile" "$HOME/.profile"
+ln -sf "$PWD/.profile" "$HOME/.bash_profile"
+
+mkdir -p "$HOME/.local/bin" || true
+
+for prog in vim lynx tmux gdb; do
+	cd $prog && ./setup
+	cd - >/dev/null
+done

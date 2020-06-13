@@ -1,0 +1,37 @@
+#!/bin/bash
+#
+# zetsearch [-t/--title-only] keyword
+# Show all Zet IDs (and their titles) whose files contain <keyword>
+# -t/--title-only means that keyword will only be looked for in the title
+# of the Zets
+# (maybe not optimal implementation)
+
+usage () {
+  echo "${0##*/}: [-t/--title-only] keyword" >&2
+  exit 1
+}
+
+keyword=
+grep_only_titles=
+
+# test if there is at least one argument
+(( $# < 1)) && usage
+
+while [[ -n "$1" ]]; do
+  case "$1" in
+    -t | --title-only)  grep_only_titles=1 ;;
+    -*)                 echo "Unknown option: $1" >&2; usage ;; # unknown option
+    *)                  keyword="$1" ;; # the keyword was reached
+  esac
+  shift
+done
+
+for file in $(git grep --ignore-case --files-with-matches "$keyword"); do
+  # print the Zet ID followed by the title
+  if [[ -n "$grep_only_titles" ]]; then
+    # only print title if it also contains the keyword
+    echo "${file%%/*} $(head -1 "$file")" | grep --ignore-case "$keyword"
+  else
+    echo "${file%%/*} $(head -1 "$file")"
+  fi
+done

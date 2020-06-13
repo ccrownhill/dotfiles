@@ -1,0 +1,86 @@
+" load default runtime
+source $VIMRUNTIME/defaults.vim
+
+" indentation
+set autoindent
+
+set number
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+
+" replace tab with spaces
+set expandtab
+
+" use shiftwidth for tab instead of tabstop
+set smarttab
+
+" highlight search results
+" deactivate with ':noh'
+set hlsearch
+
+" enable syntax highlighting
+" (maybe also consider using 'syntax on')
+syntax enable
+
+" choose a colorscheme here
+" default: 'colorscheme default'
+"colorscheme elflord
+" Best colorscheme: NONE!!
+" --> if no colorscheme is specified it will look best
+
+" show a red column at the 80 character mark at each line so that lines don't
+" get to long
+set colorcolumn=80
+
+" dark background
+set background=dark
+
+" faster scrolling
+set ttyfast
+
+" show open buffers in tabline at the top
+"set showtabline=1
+
+if v:version >= 800
+	" prevent automatic folding
+	set foldmethod=manual
+endif
+
+" allow sensing the filetype
+filetype plugin on
+
+" Install vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+	silent execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+	autocmd VimEnter * PlugInstall
+endif
+
+" load plugins if Plug is there
+if filereadable(expand("~/.vim/autoload/plug.vim"))
+	" load all plugins
+	call plug#begin('~/.vimplugins')
+	Plug 'vim-pandoc/vim-pandoc'
+	Plug 'rwxrob/vim-pandoc-syntax-simple'
+	Plug 'roxma/vim-tmux-clipboard' " integration of vim and tmux clipboard
+	Plug 'mhinz/vim-signify' " show modified, added and removed lines in sign column with any version control system
+	"Plug 'morhetz/gruvbox' " gruvbox colorscheme
+	call plug#end()
+
+	"colorscheme gruvbox
+
+	" make md headers yellow and bold
+	au FileType pandoc hi pandocAtxHeader ctermfg=yellow cterm=bold
+	au FileType pandoc hi pandocAtxHeaderMark ctermfg=yellow cterm=bold
+	au FileType pandoc hi pandocAtxStart ctermfg=yellow cterm=bold
+
+	" pandoc
+	let g:pandoc#modules#disabled = ["folding"] " disable folding of headers
+endif
+
+" disable search highlighting with <C-L> when refreshing screen
+nnoremap <C-L> :nohl<CR><C-L>
+
+" switch line number display on and off with <F1> (for relative linenumbers
+" you need to use ':set relativenumber!'
+map <F1> :set number!<CR>

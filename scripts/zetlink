@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# read sinlge Isosec Zet identifiers from stdin
+# and replace them with links as usually used at the end of my Zet:
+
+while read -r isosec_id; do
+  first_line=$(head -1 ../"$isosec_id"/README.md)
+  echo "* [[*${first_line:2}*]](/${isosec_id})"
+done

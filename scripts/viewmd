@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+usage () {
+  echo "${0##*/}: <markdown file to view rendered>" >&2
+  exit 1
+}
+
+# Test if commit message is given
+(( $# != 1 )) && usage
+
+default_dir=~/.markdownrenders
+file_ext="html"
+
+if [[ ! -d $default_dir ]]; then
+  echo "Creating '$default_dir' for temporary render storage"
+  mkdir -p "$default_dir"
+fi
+
+pandoc --mathjax="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" --standalone -o "$default_dir/tmpmdrender.$file_ext" "$1"
+firefox "$default_dir/tmpmdrender.$file_ext" &>/dev/null &
+
+sleep 3 # without this delay firefox will show file not found since the file will be immediatly deleted
+rm "$default_dir/tmpmdrender.$file_ext"

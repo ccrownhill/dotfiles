@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# uncomment lines in VI using its shell integration capabilities (with '!...')
+# note that all comments are assumed to be followed by spaces
+
+while IFS= read -r line; do
+  echo "${line#* }"
+done

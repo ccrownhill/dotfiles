@@ -1,0 +1,37 @@
+! Using gruvbox colors as described here:
+! https://github.com/morhetz/gruvbox
+
+URxvt.background: #1d2021
+URxvt.foreground: #fbf1c7
+
+! dark and light black
+URxvt.color0: #282828
+URxvt.color8: #928374
+
+! dark and light red
+URxvt.color1: #cc241d
+URxvt.color9: #fb4934
+
+! dark and light green
+URxvt.color2: #98971a
+URxvt.color10: #b8bb26
+
+! dark and light yellow
+URxvt.color3: #d79921
+URxvt.color11: #fabd2f
+
+! dark and light blue
+URxvt.color4: #458588
+URxvt.color12: #83a598
+
+! dark and light purple
+URxvt.color5: #b16286
+URxvt.color13: #d3869b
+
+! dark and light aqua
+URxvt.color6: #689d6a
+URxvt.color14: #8ec07c
+
+! dark and light gray
+URxvt.color7: #a89984
+URxvt.color15: #ebdbb2

@@ -1,0 +1,3 @@
+#!/bin/sh
+[ -z "$(type vim)" -o -z "$(which vimtutor)" ] && echo "VIM not installed. Skipping." && exit 0
+ln -sf "$PWD/vimrc" "$HOME/.vimrc"

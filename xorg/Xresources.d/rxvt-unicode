@@ -1,0 +1,17 @@
+! urxvt config ...
+URxvt.termName: rxvt-unicode-256color
+URxvt.font: xft:Liberation Mono:pixelsize=16:antialias=true
+! dont set this to true because below background and foreground where set explicitly
+!URxvt.reverseVideo: True
+URxvt.background: #000000
+URxvt.foreground: #ffffff
+URxvt.scrollBar: False
+! make colors the same as in xterm by making blue brighter
+URxvt.color12: #5c5cff
+
+! transparency: this will need a compositing window manager
+! so that windows below it can be seen through the terminal
+! without such a window manager only native transparency can be achieved
+! which means that the background image is set as the background for the terminal
+!URxvt*transparent: true
+!URxvt.shading: 50

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# This also needs the lynx script to be in ../scripts
+
+lynx_dir="$HOME/.config/lynx"
+mkdir -p "$lynx_dir"
+ln -sf "$PWD/lynx.cfg" "${lynx_dir}/lynx.cfg"
+ln -sf "$PWD/lynx.lss" "${lynx_dir}/lynx.lss"

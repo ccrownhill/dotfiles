@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# comment lines in VI using its shell integration capabilities (with '!...')
+
+while IFS= read -r line; do
+  echo "${1:-#} $line"
+done

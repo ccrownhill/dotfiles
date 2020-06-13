@@ -1,0 +1,3 @@
+#!/bin/sh
+[ -z "$(which tmux)" ] && echo "Tmux not installed. Skipping." && exit 0
+ln -sf "$PWD/tmux.conf" "$HOME/.tmux.conf"

@@ -1,0 +1,12 @@
+#!/bin/bash
+git add ./
+first_line=$(head -1 README.md)
+# check if the README.md has a title
+if [ "${first_line:0:1}" == "#" ]; then
+	# if it has use it as the commit message
+	git commit -m "${first_line:2}"
+else
+	# otherwise just use the whole file content as the commit message
+	git commit -m "$(cat README.md)"
+fi
+git push

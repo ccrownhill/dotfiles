@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# run jupyter notebook container
+
+if [ -z "$1" ]; then
+  echo "Usage: runjnc <name of container image>"
+  exit 1
+fi
+
+docker run -v $PWD:/home/undefined/loc -p 8888:8888 --rm $1

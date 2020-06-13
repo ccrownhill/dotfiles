@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Put the given number of tabs (0 by default) at the beginning of a line.
+# If there are already more tabs reduce them to the given amount.
+# Note that one tab is treated as two spaces.
+
+num_tabs="$1"
+while read -r line; do # no IFS= to remove leading blanks
+  for ((i=0; i<num_tabs; i++)); do
+    echo -n "  "
+  done
+  echo "$line"
+done

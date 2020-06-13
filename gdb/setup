@@ -1,0 +1,3 @@
+#!/bin/sh
+[ -z "$(which gdb)" ] && echo "GDB not installed. Skipping." && exit 0
+ln -sf "$PWD/gdbinit" "$HOME/.gdbinit"

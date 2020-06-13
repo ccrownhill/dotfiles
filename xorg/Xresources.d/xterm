@@ -1,0 +1,6 @@
+! xterm config ...
+XTerm.termName: xterm-256color
+! font and fontsize
+XTerm.vt100.faceName: Liberation Mono:size=12:antialias=true
+! make background black and foreground white
+XTerm.vt100.reverseVideo: true

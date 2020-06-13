@@ -1,0 +1,4 @@
+#!/bin/sh
+git add README.md
+git commit -m "update register"
+git push

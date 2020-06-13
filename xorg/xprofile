@@ -1,0 +1,16 @@
+xrdb -I$HOME -merge $HOME/.Xresources
+xmodmap ~/.Xmodmap
+
+# this is only needed if there are .desktop entries
+# in ~/.local/share/applications
+#XDG_DATA_DIRS="$HOME/.local/share:${XDG_DATA_DIRS}"
+
+# set PATH here so that dmenu can read all of it
+export PATH="${HOME}/.local/bin:${HOME}/bin:${PATH}"
+
+# Display the time in the dwm bar
+while true
+do
+  xsetroot -name "$(date +%H:%M)"
+  sleep 20s
+done &

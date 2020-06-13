@@ -1,0 +1,5 @@
+#!/bin/sh
+ln -sf "$PWD/xinitrc" "$HOME/.xinitrc"
+ln -sf "$PWD/xprofile" "$HOME/.xprofile"
+ln -sf "$PWD/Xresources" "$HOME/.Xresources"
+ln -sf "$PWD/Xresources.d" "$HOME/.Xresources.d"
