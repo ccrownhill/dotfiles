@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# emojis from emojipedia.org
+declare -A emojis
+emojis[smile]=😊
+emojis[grin]=😀
+emojis[cry]=😢
+emojis[cryloud]=😭
+emojis[wink]=😉
+emojis[laugh]=😂
+emojis[grit]=😬
+emojis[sunglasses]=😎
+emojis[thumbsup]=👍
+emojis[thumpsdown]=👎
+emojis[applause]=👏
+emojis[check]=✔️ 
+emojis[fire]=🔥
+emojis[exclamation]=❗
+emojis[hundred]=💯
+emojis[tomato]=🍅
+
+toemoji () {
+  local file="$1"
+  local in="/dev/stdin"
+  local out="/dev/stdout"
+
+  if [[ -n "$file" ]]; then
+    in="$file"
+    out="$(mktemp)"
+  fi
+
+  while read -r line; do
+    for key in "${!emojis[@]}"; do
+      line="${line//:$key:/${emojis[$key]}}"
+    done
+    echo "$line" >> "$out"
+  done < "$in"
+
+  if [[ -n "$file" ]]; then
+    cp "$out" "$file"
+    rm "$out"
+  fi
+}
+
+toemoji "$@"
