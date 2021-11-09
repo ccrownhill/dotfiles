@@ -115,6 +115,7 @@ alias '?'=duck
 alias '??'=google
 alias free='free -h'
 alias df='df -h'
+alias less='less -I' # ignore case when searching less or man pages
 
 # only if vim is installed
 type vim &>/dev/null && alias vi=vim
