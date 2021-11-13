@@ -162,6 +162,8 @@ zetnew () {
 	touch README.md
 }
 
+export -f pyenv_create pyenv_activate pyenv_destroy zetnew
+
 
 #--------------------
 # COMPLETION
