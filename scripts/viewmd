@@ -7,6 +7,13 @@ usage () {
   exit 1
 }
 
+# tab completion for markdown files only
+if [[ -n "$COMP_LINE" ]]; then
+  prefix=$(echo "$COMP_LINE" | cut -d " " -f 2)
+  ls -1 *.md 2>/dev/null | grep ^$prefix
+  exit 0
+fi
+
 # Test if commit message is given
 (( $# != 1 )) && usage
 
