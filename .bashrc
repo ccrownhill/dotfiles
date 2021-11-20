@@ -41,6 +41,7 @@ shopt -s histappend
 #--------------------
 # vi style command line editing
 set -o vi
+shopt -s globstar
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
