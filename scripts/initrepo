@@ -1,8 +1,14 @@
 #!/bin/bash
+
+set -e
+
+visibility=private
+[[ -n "$1" && "$1" == "pub" ]] && visibility=public
+
 repo_name="${PWD##*/}"
 git init
 git add -A
 git commit -m "first commit"
 git branch -M main
-gh repo create "$repo_name"
+gh repo create --$visibility --remote=origin --source=. "$repo_name"
 git push -u origin main
