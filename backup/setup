@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+ssh-copy-id data@pidata
+
+if [ -z "$(which anacron)" ]; then
+  sudo apt update
+  sudo apt install anacron
+fi
+
+sudo cp homebackup /etc/cron.daily/
+sudo chown root:root /etc/cron.daily/homebackup

@@ -1,0 +1,2 @@
+#!/bin/sh
+su undefined -c rsync -av --delete --rsh=ssh "$HOME/Documents" "$HOME/Pictures" "$HOME/Videos" "$HOME/Downloads" data@pidata:/home/data
