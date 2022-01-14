@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# setup lightdm display manager with the gtk greeter
+
+set -e
+
+read -p "Are you running Ubuntu? (y/N) " answer
+
+if [ "$answer" != "y" ]; then
+  echo "quitting because this script is meant only for Ubuntu based systems..."
+  exit 1
+fi
+
+if [ -z "$(which lightdm)" ]; then
+  echo "install lightdm..."
+  sudo apt update
+  sudo apt install lightdm
+fi
+
+if [ -z "$(which lightdm-gtk-greeter)" ]; then
+  echo "installing gtk greeter..."
+  sudo apt update
+  sudo apt install lightdm-gtk-greeter
+fi
+
+echo "check if lightdm is your default display manager..."
+if [ "$(cat /etc/X11/default-display-manager)" != "/usr/sbin/lightdm" ]; then
+  echo "No. Please set it in the following menu..."
+  sudo dpkg-reconfigure lightdm
+fi
+
+echo "make gtk the default greeter..."
+[ -f /etc/lightdm/lightdm.conf ] && sudo cp /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf.bak
+sudo cp lightdm.conf /etc/lightdm/lightdm.conf
+
+echo "configure gtk greeter settings..."
+[ -f /etc/lightdm/lightdm-gtk-greeter.conf ] && sudo cp /etc/lightdm/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf.bak
+sudo cp lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
