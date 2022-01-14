@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Display the time in the dwm bar
+while true
+do
+  xsetroot -name "$(date +%m-%dT%H:%M)"
+  sleep 20s
+done &
+
+exec dwm

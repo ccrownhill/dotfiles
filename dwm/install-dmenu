@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+echo "install dependencies..."
+sudo apt update
+sudo apt install build-essential libx11-dev
+
+echo "obtain the source code..."
+mkdir -p "$HOME/src"
+cd "$HOME/src"
+git clone https://git.suckless.org/dmenu
+
+echo "installing..."
+cd dmenu
+sudo make clean install

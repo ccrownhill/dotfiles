@@ -1,0 +1,44 @@
+#!/bin/sh
+
+set -e
+
+launch_script_path="$PWD/launch-dwm"
+launch_script_dest="$HOME/.local/bin/launch-dwm"
+
+echo "installing dependencies..."
+sudo apt update
+sudo apt install build-essential libx11-dev libxinerama-dev sharutils libxft-dev
+
+echo "obtaining source code..."
+mkdir -p "$HOME/src"
+cd "$HOME/src"
+
+if [ -d dwm ]; then
+  echo "Looks like you already have the DWM source code."
+  read -p "Do want to proceed with the next step (n) or abort (A)? " answer
+  [ "$answer" != "n" ] && exit 1
+else
+  git clone https://git.suckless.org/dwm
+fi
+
+echo "installing..."
+cd dwm
+sudo make clean install
+
+echo "add .desktop entry to /usr/share/xsessions..."
+(cat | sudo tee /usr/share/xsessions/dwm.desktop > /dev/null) << _EOF_
+[Desktop Entry]
+Name=DWM
+Exec=$launch_script_dest
+_EOF_
+
+echo "set up the start script which adds a clock..."
+ln -sf "$launch_script_path" "$HOME/.local/bin/launch-dwm"
+
+echo "setting up X window system config files: ~/.xinitrc, ~/.xprofile, and ~/.Xresources..."
+cd $DOTFILES/xorg
+if [ -x setup ]; then
+  ./setup
+else
+  echo "setup file '$DOTFILES/xorg/setup' not found..."
+fi

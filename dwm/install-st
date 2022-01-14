@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+echo "install dependencies..."
+sudo apt update
+sudo apt install build-essential libx11-dev
+
+echo "obtain the source code..."
+mkdir -p "$HOME/src"
+cd "$HOME/src"
+git clone https://git.suckless.org/st
+
+echo "configuring..."
+cd st
+# config: change default font size to 16 (default 12)
+cp config.def.h config.h
+sed -i "s/pixelsize=12/pixelsize=16/" config.h
+
+echo "installing..."
+sudo make clean install
