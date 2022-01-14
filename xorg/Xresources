@@ -1,6 +1,3 @@
-Xcursor.size: 16
-
-#include ".Xresources.d/xterm"
-#include ".Xresources.d/rxvt-unicode"
-!#include ".Xresources.d/rxvt-unicode_gruvbox"
-!#include ".Xresources.d/rxvt-unicode_gruvbox_modified"
+Xcursor.theme: DMZ-Black
+! set the default cursor size to avoid big cursor in DWM
+Xcursor.size: 24
