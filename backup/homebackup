@@ -1,2 +1,3 @@
 #!/bin/sh
-su undefined -c "rsync -av --delete --rsh=ssh $HOME/Documents $HOME/Pictures $HOME/Videos $HOME/Downloads data@pidata:/home/data"
+username="undefined"
+su $username -c "rsync -av --delete --rsh=ssh /home/$username/Documents /home/$username/Pictures /home/$username/Videos /home/$username/Downloads data@pidata:/home/data"
