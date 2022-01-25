@@ -21,8 +21,13 @@ else
   git clone https://git.suckless.org/dwm
 fi
 
-echo "installing..."
 cd dwm
+
+echo "configuring..."
+cp config.def.h config.h
+sed -i 's/{ "Firefox"/\/\/{ "Firefox"/' config.h
+
+echo "installing..."
 sudo make clean install
 
 echo "add .desktop entry to /usr/share/xsessions..."
