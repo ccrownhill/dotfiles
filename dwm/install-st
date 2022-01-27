@@ -3,8 +3,12 @@
 set -e
 
 echo "install dependencies..."
-sudo apt update
-sudo apt install build-essential libx11-dev
+if [ -e /etc/arch-release ]; then
+  sudo pacman -Sy base-devel libx11
+else
+  sudo apt update
+  sudo apt install build-essential libx11-dev
+fi
 
 echo "obtain the source code..."
 mkdir -p "$HOME/src"
