@@ -2,4 +2,4 @@
 
 set -e
 
-dconf load /org/gnome/terminal < gnome_term
+dconf load /org/gnome/terminal/ < gnome_term
