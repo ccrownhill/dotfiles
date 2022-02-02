@@ -1,0 +1,3 @@
+#!/bin/sh
+
+dconf dump /org/gnome/terminal/ > gnome_term
