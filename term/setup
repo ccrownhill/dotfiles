@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+dconf load /org/gnome/terminal < gnome_term
