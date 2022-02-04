@@ -51,3 +51,10 @@ if [ -x setup ]; then
 else
   echo "setup file '$DOTFILES/xorg/setup' not found..."
 fi
+
+# also install lightdm display manager
+read -p "Do you also want to set up lightdm display manager (recommended) (Y/n) " answer
+if [ "$answer" != "n" ]; then
+  cd ../lightdm
+  ./setup
+fi
