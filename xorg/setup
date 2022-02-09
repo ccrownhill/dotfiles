@@ -1,4 +1,14 @@
 #!/bin/sh
+echo "setting up local X config files..."
 ln -sf "$PWD/xinitrc" "$HOME/.xinitrc"
 ln -sf "$PWD/xprofile" "$HOME/.xprofile"
 ln -sf "$PWD/Xresources" "$HOME/.Xresources"
+
+echo "configuring the keyboard..."
+localectl --no-convert set-x11-keymap us,de pc105 , grp:win_space_toggle,compose:ralt
+
+echo "touchpad setup..."
+read -p "Are you on a laptop? (Y/n) " answer
+if [ "$answer" != "n" ]; then
+  sudo cp 40-libinput.conf /etc/X11/xorg.conf.d/
+fi

@@ -8,10 +8,5 @@ These can actually be safely ignored and have been removed from the `setup` scri
 
 ## Keyboard config
 
-**Note**: The setup script here does not place `00-keyboard.conf` in `/etc/X11/xorg.conf.d/`.
-This needs to be done as root.
-So just do it manually with:
-
-```
-sudo cp 00-keyboard.conf /etc/X11/xorg.conf.d/
-```
+**Note**: The setup script here does not manually place `00-keyboard.conf` in `/etc/X11/xorg.conf.d/`.
+Instead it uses `localectl` which does the same.
