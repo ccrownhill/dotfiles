@@ -18,7 +18,7 @@ export VISUAL=vi
 export EDITOR=vi
 export PYENV_DIR="${HOME}/.python_envs" # for virtual python environments with venv
 
-export PATH="${HOME}/.local/bin:${SCRIPTS}:${PATH}"
+export PATH="${HOME}/.local/bin:${SCRIPTS}:/usr/local/go/bin:${PATH}"
 export CDPATH="${REPOS}:/mnt/data/school:${CDPATH}"
 
 
