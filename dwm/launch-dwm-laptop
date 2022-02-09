@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Display the time in the dwm bar
+while true
+do
+  bat_cap="$(cat /sys/class/power_supply/BAT0/capacity)"
+  wifi_stat="$(nmcli --fields IN-USE,BARS device wifi | \
+    grep '^*' | \
+    tr -s " " | \
+    cut -d " " -f 2)"
+  xsetroot -name "Bat: $bat_cap | Wlan: $wifi_stat | $(date +%m-%dT%H:%M)"
+  sleep 20s
+done &
+
+exec dwm

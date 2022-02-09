@@ -2,7 +2,7 @@
 
 set -e
 
-launch_script_path="$PWD/launch-dwm"
+dwm_config_path="$PWD"
 launch_script_dest="$HOME/.local/bin/launch-dwm"
 
 echo "installing dependencies..."
@@ -41,8 +41,13 @@ Name=DWM
 Exec=$launch_script_dest
 _EOF_
 
-echo "set up the start script which adds a clock..."
-ln -sf "$launch_script_path" "$HOME/.local/bin/launch-dwm"
+echo "set up the start script which adds status bar info..."
+read -p "Are you on a laptop? (y/N) " answer
+if [ "$answer" == "y" ]; then
+  ln -sf "$dwm_config_path/launch-dwm-laptop" "$launch_script_dest"
+else
+  ln -sf "$dwm_config_path/launch-dwm" "$launch_script_dest"
+fi
 
 echo "setting up X window system config files: ~/.xinitrc, ~/.xprofile, and ~/.Xresources..."
 cd $DOTFILES/xorg
