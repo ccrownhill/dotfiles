@@ -128,7 +128,7 @@ type vim &>/dev/null && alias vi=vim
 #--------------------
 pyenv_create () {
 	if (($# != 1)); then
-		echo "Usage: $0 <env_name>"
+		echo "Usage: pyenv_create <env_name>"
 		return 1
 	fi
 	python3 -m venv "${PYENV_DIR}/$1"
@@ -141,7 +141,7 @@ pyenv_activate () {
 		if [[ -d "${PYENV_DIR}/base" ]]; then 
 			env_dir="${PYENV_DIR}/base"
 		else
-			echo "Usage: $0 <env_name>"
+			echo "Usage: pyenv_activate <env_name>"
 			return 1
 		fi
 	fi
@@ -150,7 +150,7 @@ pyenv_activate () {
 
 pyenv_destroy () {
 	if (($# != 1)); then
-		echo "Usage: $0 <env_name>"
+		echo "Usage: pyenv_destroy <env_name>"
 		return 1
 	fi
 	rm -r "${PYENV_DIR}/$1"
