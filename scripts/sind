@@ -7,7 +7,7 @@
 num_tabs="$1"
 while read -r line; do # no IFS= to remove leading blanks
   for ((i=0; i<num_tabs; i++)); do
-    echo -n "  "
+    echo -en "\t"
   done
   echo "$line"
 done
