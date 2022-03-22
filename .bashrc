@@ -16,10 +16,13 @@ export ZETTELKASTEN="$REPOS/zet"
 export SCRIPTS="$DOTFILES/scripts"
 export VISUAL=vi
 export EDITOR=vi
-export PYENV_DIR="${HOME}/.python_envs" # for virtual python environments with venv
+export PYENV_DIR="$HOME/.python_envs" # for virtual python environments with venv
+export GEM_HOME="$HOME/.ruby"
 
-export PATH="${HOME}/.local/bin:${SCRIPTS}:/usr/local/go/bin:${PATH}"
-export CDPATH="${REPOS}:/mnt/data/school:${CDPATH}"
+export GOPATH="$HOME/.local/share/go"
+export GOBIN="$HOME/.local/bin"
+export PATH="$HOME/.local/bin:${SCRIPTS}:/usr/local/go/bin:${HOME}/.ruby/bin:${PATH}"
+export CDPATH="$REPOS:/mnt/data/school:${CDPATH}"
 
 
 #--------------------
