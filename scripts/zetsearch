@@ -1,37 +1,44 @@
 #!/bin/bash
 #
-# zetsearch [-t/--title-only] keyword
+# zetsearch [-t/--tag tagname] [-h/--header-only] keyword
 # Show all Zet IDs (and their titles) whose files contain <keyword>
-# -t/--title-only means that keyword will only be looked for in the title
+# -t/--tag selects only zets with the given tag
+# -h/--header-only means that keyword will only be looked for in the title
 # of the Zets
 # (maybe not optimal implementation)
 
 usage () {
-  echo "${0##*/}: [-t/--title-only] keyword" >&2
-  exit 1
+	echo "${0##*/}: [-t/--tag tagname] [-h/--header-only] keyword" >&2
+	exit 1
 }
 
 keyword=
-grep_only_titles=
-
-# test if there is at least one argument
-(( $# < 1)) && usage
+tag=
+header_only=
+pattern=
 
 while [[ -n "$1" ]]; do
-  case "$1" in
-    -t | --title-only)  grep_only_titles=1 ;;
-    -*)                 echo "Unknown option: $1" >&2; usage ;; # unknown option
-    *)                  keyword="$1" ;; # the keyword was reached
-  esac
-  shift
+	case "$1" in
+		-t | --tag)		shift; tag="$1" ;;
+		-h | --header-only)	header_only=1 ;;
+		-*)			echo "Unknown option: $1" >&2; usage ;;
+		*)			keyword="$1" ;;
+	esac
+	shift
 done
 
-for file in $(git grep --ignore-case --files-with-matches "$keyword"); do
-  # print the Zet ID followed by the title
-  if [[ -n "$grep_only_titles" ]]; then
-    # only print title if it also contains the keyword
-    echo "${file%%/*} $(head -1 "$file")" | grep --ignore-case "$keyword"
-  else
-    echo "${file%%/*} $(head -1 "$file")"
-  fi
+if [[ -z "$keyword" && -z "$tag" ]]; then
+	echo "Either a tag or a keyword is required" >&2
+	usage
+fi
+
+# extended regex needed for the | or operator
+for file in $(git grep --ignore-case --files-with-matches \
+			-e "$keyword" --and -e "#$tag"); do
+	# print the Zet ID followed by the title
+	if [[ -n "$header_only" ]]; then
+		echo "${file%%/*} $(head -1 "$file")" | grep --ignore-case "$keyword"
+	else
+		echo "${file%%/*} $(head -1 "$file")"
+	fi
 done
