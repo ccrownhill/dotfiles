@@ -87,3 +87,6 @@ nnoremap <C-L> :nohl<CR><C-L>
 " switch line number display on and off with <F1> (for relative linenumbers
 " you need to use ':set relativenumber!'
 map <F1> :set number!<CR>
+
+" make m a shortcut for :w
+nnoremap m :w<CR>
