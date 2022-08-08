@@ -7,6 +7,8 @@ usage () {
   exit 1
 }
 
+FILE_EXT="html"
+
 # tab completion for markdown files only
 if [[ -n "$COMP_LINE" ]]; then
   prefix=$(echo "$COMP_LINE" | cut -d " " -f 2)
@@ -17,16 +19,8 @@ fi
 # Test if commit message is given
 (( $# != 1 )) && usage
 
-default_dir=~/.markdownrenders
-file_ext="html"
-
-if [[ ! -d $default_dir ]]; then
-  echo "Creating '$default_dir' for temporary render storage"
-  mkdir -p "$default_dir"
-fi
-
-pandoc --mathjax="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" --standalone -o "$default_dir/tmpmdrender.$file_ext" "$1"
-firefox "$default_dir/tmpmdrender.$file_ext" &>/dev/null &
+pandoc --mathjax="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" --standalone -o "./tmpmdrender.$FILE_EXT" "$1"
+firefox "./tmpmdrender.$FILE_EXT" &>/dev/null &
 
 sleep 3 # without this delay firefox will show file not found since the file will be immediatly deleted
-rm "$default_dir/tmpmdrender.$file_ext"
+rm "./tmpmdrender.$FILE_EXT"
