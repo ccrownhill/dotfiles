@@ -19,7 +19,7 @@ pattern=
 
 while [[ -n "$1" ]]; do
 	case "$1" in
-		-t | --tag)		shift; tag="$1" ;;
+		-t | --tag)		shift; tag="#$1" ;;
 		-h | --header-only)	header_only=1 ;;
 		-*)			echo "Unknown option: $1" >&2; usage ;;
 		*)			keyword="$1" ;;
@@ -34,7 +34,7 @@ fi
 
 # extended regex needed for the | or operator
 for file in $(git grep --ignore-case --files-with-matches \
-			-e "$keyword" --and -e "#$tag"); do
+			-e "$keyword" --and -e "$tag"); do
 	# print the Zet ID followed by the title
 	if [[ -n "$header_only" ]]; then
 		echo "${file%%/*} $(head -1 "$file")" | grep --ignore-case "$keyword"
