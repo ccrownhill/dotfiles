@@ -39,6 +39,8 @@ set background=dark
 " faster scrolling
 set ttyfast
 
+set noswapfile
+
 " show open buffers in tabline at the top
 "set showtabline=1
 
