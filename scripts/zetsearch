@@ -15,7 +15,6 @@ usage () {
 keyword=
 tag=
 header_only=
-pattern=
 
 while [[ -n "$1" ]]; do
 	case "$1" in
@@ -32,9 +31,11 @@ if [[ -z "$keyword" && -z "$tag" ]]; then
 	usage
 fi
 
-# extended regex needed for the | or operator
-for file in $(git grep --ignore-case --files-with-matches \
-			-e "$keyword" --and -e "$tag"); do
+for file in $(grep --ignore-case --files-with-matches "$keyword" */*); do
+	if [[ -z $(grep --ignore-case "$tag" "$file") ]]; then
+ 		continue
+ 	fi
+
 	# print the Zet ID followed by the title
 	if [[ -n "$header_only" ]]; then
 		echo "${file%%/*} $(head -1 "$file")" | grep --ignore-case "$keyword"
