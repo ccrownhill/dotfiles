@@ -48,6 +48,7 @@ shopt -s globstar
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
+# necessary for __ps1
 shopt -s checkwinsize
 
 
@@ -61,42 +62,29 @@ shopt -s checkwinsize
 #--------------------
 # PROMPT
 #--------------------
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+MIN_COLS=80
+MAX_PROMPT=60
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
+__ps1() {
+	local red='\[\e[1;31m\]' green='\[\e[1;32m\]' blue='\[\e[1;34m\]' \
+		nocol='\[\e[0m\]' branch countme dir
 
-if [ "$color_prompt" = yes ]; then
-    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
+	branch="$(git branch --show-current 2>/dev/null)"
+	[[ -n "$branch" ]] && branch=" ($branch) " || branch=""
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
+	countme="\u@\h:\w${branch}\$ "
+	countme="${countme@P}"
+
+	if (( COLUMNS - ${#countme} < MIN_COLS
+	   || ${#countme} > MAX_PROMPT )); then
+		PS1="╔ $green\u@\h$nocol:$blue\w$red${branch}$nocol\n╚ \$ "
+	else
+		PS1="$green\u@\h$nocol:$blue\w$red${branch}$nocol$ "
+	fi
+}
+
+PROMPT_COMMAND="__ps1"
 
 
 #--------------------
