@@ -21,7 +21,7 @@ export GEM_HOME="$HOME/.ruby"
 
 export GOPATH="$HOME/.local/share/go"
 export GOBIN="$HOME/.local/bin"
-export PATH="$HOME/.local/bin:${SCRIPTS}:/usr/local/go/bin:${HOME}/.ruby/bin:${PATH}"
+export PATH="$HOME/.local/bin:${SCRIPTS}:/usr/local/go/bin:${HOME}/.ruby/bin:${PATH}:$HOME/.cargo/bin"
 export CDPATH="$REPOS:/mnt/data/school:${CDPATH}"
 
 

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# generate a markdown numbered list
+# as a table of contents for a markdown file including all headers until
+# the third level, i.e. ###
+
+if (( $# != 1 )); then
+	echo "${0##*/}: <markdown filename>" 1>&2
+	exit 1
+fi
+
+while IFS= read -r line; do
+	if [[ "${line::2}" == "# " ]]; then
+		echo -e "${line#\# }"
+	elif [[ "${line::3}" == "## " ]]; then
+		echo -e "\t1. ${line#\## }"
+	elif [[ "${line::4}" == "### " ]]; then
+		echo -e "\t\t1. ${line#\### }"
+	fi
+done < "$1"
