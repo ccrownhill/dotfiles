@@ -31,7 +31,7 @@ if [[ -z "$keyword" && -z "$tag" ]]; then
 	usage
 fi
 
-for file in $(grep --ignore-case --files-with-matches "$keyword" */*); do
+for file in $(grep --ignore-case --files-with-matches "$keyword" */* 2>/dev/null); do
 	if [[ -z $(grep --ignore-case "$tag" "$file") ]]; then
  		continue
  	fi

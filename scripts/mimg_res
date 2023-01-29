@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+
+# resize the image given as the first argument to a reasonable size for
+# inserting it in markdown documents
+# right now this will be hardcoded to 600px height and the according width
+# the output file for img.png would be img_res.png
+
+from PIL import Image
+import sys
+
+HEIGHT = 600
+
+if len(sys.argv) <= 1:
+    sys.exit(1)
+
+fname = sys.argv[1]
+im = Image.open(fname)
+name, ext = fname.split(".")
+
+ratio = im.width/im.height
+new_width = int(ratio * HEIGHT)
+out = im.resize((new_width, HEIGHT))
+out.save(name + "_res." + ext)

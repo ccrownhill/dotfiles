@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# insert markdown image link for given file name as first argument
+# -s resize image to reasonable size of 600px height and according width
+#    creates a copy as img_res.png of img.png and links it
+
+
+set -e
+
+usage () {
+  echo "${0##*/}: [-s/--resize] <image file name>" >&2
+  exit 1
+}
+
+# Test if image file name is given
+(( $# < 1 )) && usage
+
+resize="false"
+img_file=
+
+while [[ -n "$1" ]]; do
+        case "$1" in
+                -s | --resize)          resize="true" ;;
+                -*)                     echo "Unknown option: $1" >&2; usage ;;
+                *)                      img_file="$1" ;;
+        esac
+        shift
+done
+
+if [[ $resize == "true" ]]; then
+	file_ext="${img_file##*.}"
+	mimg_res "$img_file"
+	img_file="${img_file%.*}_res.$file_ext"
+fi
+
+echo "![$img_file]($img_file)"

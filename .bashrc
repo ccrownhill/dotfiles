@@ -104,6 +104,7 @@ alias dot="cd $DOTFILES"
 alias scripts="cd $SCRIPTS"
 alias zet="cd $ZETTELKASTEN"
 alias zzetnew="zet && zetnew"
+alias zz="zzetnew"
 alias '?'=duck
 alias '??'=google
 alias free='free -h'
@@ -154,10 +155,17 @@ zetnew () {
 	mkdir $dir
 	cd $dir
 	touch README.md
-  vi README.md
+	vi README.md
 }
 
 export -f pyenv_create pyenv_activate pyenv_destroy zetnew
+
+#--------------------
+# PYTHON
+#--------------------
+if [[ -d "${PYENV_DIR}/base" ]]; then 
+	pyenv_activate
+fi
 
 
 #--------------------
