@@ -1,20 +1,39 @@
-#!/bin/bash
+#!/usr/bin/env python3
 
-# generate a markdown numbered list
-# as a table of contents for a markdown file including all headers until
-# the third level, i.e. ###
+import sys
 
-if (( $# != 1 )); then
-	echo "${0##*/}: <markdown filename>" 1>&2
-	exit 1
-fi
+if len(sys.argv) != 2:
+    print("Usage: tocgen file.md")
+    sys.exit(1)
 
-while IFS= read -r line; do
-	if [[ "${line::2}" == "# " ]]; then
-		echo -e "${line#\# }"
-	elif [[ "${line::3}" == "## " ]]; then
-		echo -e "\t1. ${line#\## }"
-	elif [[ "${line::4}" == "### " ]]; then
-		echo -e "\t\t1. ${line#\### }"
-	fi
-done < "$1"
+def get_link(line):
+    link = line.replace(":", "")
+    link = link.replace("(", "")
+    link = link.replace(")", "")
+    link = link.replace("`", "")
+    link = link.replace("/", "")
+    link = link.replace("\\", "")
+    link = link.replace(">", "")
+    link = link.replace("<", "")
+    link = link.replace("  ", " ")
+    link = link.lower()
+    link = link.strip("# ")
+    link = "#" + link.replace(" ", "-")
+    return link
+
+with open(sys.argv[1], "r") as file:
+    in_code_block = False
+    for line in file:
+        line = line.strip()
+        if len(line) == 0:
+            continue
+        if (line[0:3] == "```"):
+            in_code_block = not in_code_block
+        if (in_code_block):
+            continue
+        if (line[0:4] == "### "):
+            print("\t\t1. [" + line[4:] + "]" + "(" + sys.argv[1] + get_link(line) + ")")
+        elif (line[0:3] == "## "):
+            print("\t1. [" + line[3:] + "]" + "(" + sys.argv[1] + get_link(line) + ")")
+        elif (line[0:2] == "# "):
+            print("1. [" + line[2:] + "]" + "(" + sys.argv[1] + get_link(line) + ")")
