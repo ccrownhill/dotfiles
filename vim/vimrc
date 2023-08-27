@@ -83,6 +83,10 @@ endif
 " automatically format go files with gofmt on save
 autocmd VimLeavePre *.go silent !gofmt -w %
 
+" automatically convert tabs to spaces for F# files
+autocmd BufReadPre,BufNewFile *.fs,*.fsx,*.fsproj
+        \ setlocal expandtab
+
 " disable search highlighting with <C-L> when refreshing screen
 nnoremap <C-L> :nohl<CR><C-L>
 
