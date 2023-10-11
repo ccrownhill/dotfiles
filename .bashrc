@@ -21,7 +21,7 @@ export GEM_HOME="$HOME/.ruby"
 
 export GOPATH="$HOME/.local/share/go"
 export GOBIN="$HOME/.local/bin"
-export PATH="$HOME/.local/bin:${SCRIPTS}:/usr/local/go/bin:${HOME}/.ruby/bin:${PATH}:$HOME/.cargo/bin"
+export PATH="$HOME/.local/bin:${SCRIPTS}:/usr/local/go/bin:${HOME}/.ruby/bin:${HOME}/.cargo/bin:/opt/riscv/bin:${PATH}"
 export CDPATH="$REPOS:${CDPATH}"
 
 [ -n "$(uname -a | grep WSL)" ] && export CDPATH="/mnt/c/Users/Constantin:${CDPATH}"
@@ -158,6 +158,26 @@ zetnew () {
 	cd $dir
 	touch README.md
 	vi README.md
+}
+
+zetjup () {
+	if [ ! -e "$1" ]; then
+		echo "Usage: zetfromjup <jupyter notebook file>"
+		exit 1
+	fi
+
+	oldpwd="$PWD"
+	d="$PWD/${1%/*}"
+
+	pandoc $1 -o "$d"/tmp.md
+	sed -i "/^:::/d" "$d"/tmp.md
+	cd "$HOME/Repos/zet"
+	newd="$(date -u +%Y%m%d%H%M%S)"
+	mkdir "$newd"
+	mv "$d"/tmp.md "$newd"/README.md
+	cd "$newd"
+	zetpush
+	cd "$oldpwd"
 }
 
 export -f pyenv_create pyenv_activate pyenv_destroy zetnew
