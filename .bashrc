@@ -21,7 +21,7 @@ export GEM_HOME="$HOME/.ruby"
 
 export GOPATH="$HOME/.local/share/go"
 export GOBIN="$HOME/.local/bin"
-export PATH="$HOME/.local/bin:${SCRIPTS}:/usr/local/go/bin:${HOME}/.ruby/bin:${HOME}/.cargo/bin:/opt/riscv/bin:${PATH}"
+export PATH="$HOME/.local/bin:${SCRIPTS}:/usr/local/go/bin:${HOME}/.ruby/bin:${HOME}/.cargo/bin:/opt/riscv/bin:${HOME}/.local/bin/quartus:${PATH}"
 export CDPATH="$REPOS:${CDPATH}"
 
 [ -n "$(uname -a | grep WSL)" ] && export CDPATH="/mnt/c/Users/Constantin:${CDPATH}"
@@ -206,3 +206,5 @@ fi
 
 # custom completion
 complete -C viewmd viewmd
+
+export QSYS_ROOTDIR="/home/crowny/intelFPGA_lite/20.1/quartus/sopc_builder/bin"

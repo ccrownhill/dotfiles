@@ -13,3 +13,5 @@ if [ -n "$BASH_VERSION" ]; then
 	. "$HOME/.bashrc"
     fi
 fi
+
+export QSYS_ROOTDIR="/home/crowny/intelFPGA_lite/20.1/quartus/sopc_builder/bin"

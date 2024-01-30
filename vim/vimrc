@@ -5,12 +5,12 @@ source $VIMRUNTIME/defaults.vim
 set autoindent
 
 set number
-"set tabstop=2
-"set softtabstop=2
-"set shiftwidth=2
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 
 " replace tab with spaces
-"set expandtab
+set expandtab
 
 " use shiftwidth for tab instead of tabstop
 set smarttab
