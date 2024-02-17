@@ -97,4 +97,4 @@ nnoremap <C-L> :nohl<CR><C-L>
 map <F1> :set number!<CR>
 
 " make m a shortcut for :w
-nnoremap m :w<CR>
+"nnoremap m :w<CR>

@@ -20,4 +20,7 @@ name, ext = fname.split(".")
 ratio = im.width/im.height
 new_width = int(ratio * HEIGHT)
 out = im.resize((new_width, HEIGHT))
-out.save(name + "_res." + ext)
+out_file_name = name + "_res." + ext
+out.save(out_file_name)
+
+print(f"![{out_file_name}]({out_file_name})")
