@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# read sinlge Isosec Zet identifiers from stdin
+# and replace them with links as usually used at the end of my Zet:
+
+# need to give it isosec id as first argument
+generate_bullet() {
+  first_line=$(head -1 ../"$1"/README.md)
+  echo "* [[*${first_line:2}*]](/${1})"
+}
+
+while read -r isosec_id; do
+  echo "$(generate_bullet $isosec_id)"
+  insert=$(generate_bullet ${PWD##*/})
+  perl -0777 -p -i -e "s/Related:\n\n/Related:\n\n${insert/\//\\\/}\n/" "../$isosec_id/README.md"
+done
