@@ -13,11 +13,10 @@ if (@ARGV < 1) {
 my @lines = <$in>;
 my $filecontents = join("", @lines[0..$#lines]);
 
-my @fn_names = "$filecontents" =~ /[a-z]+\s\w+\(.*\)\s\{/g;
-
-my $cleared;
-foreach (@fn_names) {
-  $cleared = substr($_, 0, -2);
+my $cleared = "";
+foreach ("$filecontents" =~ /\w+\s\*?\w+\s*\(.*\)\s*\{/g) {
+  s/\n//g;
+  $cleared = substr($_, 0, -1);
   print "$cleared;\n";
 }
 
