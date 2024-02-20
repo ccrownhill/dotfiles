@@ -14,8 +14,6 @@ my @lines = <$in>;
 my $filecontents = join("", @lines[0..$#lines]);
 
 my @fn_names = "$filecontents" =~ /[a-z]+\s\w+\(.*\)\s\{/g;
-my $test = "$filecontents" =~ /[a-z]+\s\w+\(.*\)\s\{/;
-print $test;
 
 my $cleared;
 foreach (@fn_names) {
