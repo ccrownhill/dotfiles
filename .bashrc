@@ -157,6 +157,18 @@ zetnew () {
 	mkdir $dir
 	cd $dir
 	touch README.md
+	[[ -n "$*" ]] && echo -e "# $*\n" > README.md
+	cat >> README.md <<- 'EOF'
+	----
+
+	Related:
+
+
+	Tags:
+
+	```
+	```
+	EOF
 	vi README.md
 }
 
