@@ -31,6 +31,8 @@ if [[ -z "$keyword" && -z "$tag" ]]; then
 	usage
 fi
 
+cd "$HOME/Repos/zet"
+
 for file in $(grep --ignore-case --files-with-matches "$keyword" */* 2>/dev/null); do
 	if [[ -z $(grep --ignore-case "$tag" "$file") ]]; then
  		continue
@@ -43,3 +45,5 @@ for file in $(grep --ignore-case --files-with-matches "$keyword" */* 2>/dev/null
 		echo "${file%%/*} $(head -1 "$file")"
 	fi
 done
+
+cd -

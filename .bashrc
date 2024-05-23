@@ -22,7 +22,7 @@ export GEM_HOME="$HOME/.ruby"
 export GOPATH="$HOME/.local/share/go"
 export GOBIN="$HOME/.local/bin"
 export PATH="$HOME/.local/bin:${SCRIPTS}:/usr/local/go/bin:${HOME}/.ruby/bin:${HOME}/.cargo/bin:/opt/riscv/bin:${HOME}/.local/bin/quartus:${PATH}"
-export CDPATH="$REPOS:${CDPATH}"
+export CDPATH="$REPOS:$REPOS/zet:${CDPATH}"
 
 [ -n "$(uname -a | grep WSL)" ] && export CDPATH="/mnt/c/Users/Constantin:${CDPATH}"
 
