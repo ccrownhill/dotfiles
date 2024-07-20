@@ -123,19 +123,21 @@ type vim &>/dev/null && alias vi=vim
 # SHELL FUNCTIONS
 #--------------------
 pyenv_create () {
-	if (($# != 1)); then
-		echo "Usage: pyenv_create <env_name>"
-		return 1
+    local env_dir
+	if (($# < 1)); then
+        env_dir="./venv"
+    else
+        env_dir="${PYENV_DIR}/$1"
 	fi
-	python3 -m venv "${PYENV_DIR}/$1"
+	python3 -m venv "${env_dir}"
 }
 
 pyenv_activate () {
 	local env_dir
 	env_dir="${PYENV_DIR}/$1"
 	if (($# != 1)); then
-		if [[ -d "${PYENV_DIR}/base" ]]; then 
-			env_dir="${PYENV_DIR}/base"
+		if [[ -d "./venv" ]]; then 
+			env_dir="./venv"
 		else
 			echo "Usage: pyenv_activate <env_name>"
 			return 1
