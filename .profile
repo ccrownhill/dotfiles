@@ -14,4 +14,4 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-export QSYS_ROOTDIR="/home/crowny/intelFPGA_lite/20.1/quartus/sopc_builder/bin"
+export PATH="${HOME}/.local/MATLAB/R2024b/bin:${PATH}"
