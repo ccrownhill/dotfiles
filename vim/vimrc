@@ -68,10 +68,19 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 	Plug 'rwxrob/vim-pandoc-syntax-simple'
 	Plug 'roxma/vim-tmux-clipboard' " integration of vim and tmux clipboard
 	Plug 'mhinz/vim-signify' " show modified, added and removed lines in sign column with any version control system
+    Plug 'img-paste-devs/img-paste.vim'
 	"Plug 'morhetz/gruvbox' " gruvbox colorscheme
 	call plug#end()
 
 	"colorscheme gruvbox
+    "
+    " enable image pasting in markdown files
+    autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
+    " there are some defaults for image directory and image name, you can
+    " change them
+    " let g:mdip_imgdir = 'img'
+    let g:mdip_imgname = 'img'
+    "
 
 	" make md headers yellow and bold
 	au FileType pandoc hi pandocAtxHeader ctermfg=yellow cterm=bold
