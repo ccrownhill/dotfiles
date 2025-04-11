@@ -69,6 +69,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 	Plug 'roxma/vim-tmux-clipboard' " integration of vim and tmux clipboard
 	Plug 'mhinz/vim-signify' " show modified, added and removed lines in sign column with any version control system
     Plug 'img-paste-devs/img-paste.vim'
+
 	"Plug 'morhetz/gruvbox' " gruvbox colorscheme
 	call plug#end()
 

@@ -15,11 +15,13 @@ usage () {
 keyword=
 tag=
 header_only=
+verbose=
 
 while [[ -n "$1" ]]; do
 	case "$1" in
 		-t | --tag)		shift; tag="#$1" ;;
 		-h | --header-only)	header_only=1 ;;
+        -v | --verbose) verbose=1 ;;
 		-*)			echo "Unknown option: $1" >&2; usage ;;
 		*)			keyword="$1" ;;
 	esac
@@ -38,11 +40,16 @@ for file in $(grep --ignore-case --files-with-matches "$keyword" */* 2>/dev/null
  		continue
  	fi
 
+    tag_info=
+    if [[ -n "$verbose" ]]; then
+        tag_info="$(tail -2 "$file" | head -1)"
+    fi
+
 	# print the Zet ID followed by the title
 	if [[ -n "$header_only" ]]; then
-		echo "${file%%/*} $(head -1 "$file")" | grep --ignore-case "$keyword"
+		echo "${file%%/*} $(head -1 "$file") $tag_info" | grep --ignore-case "$keyword"
 	else
-		echo "${file%%/*} $(head -1 "$file")"
+		echo "${file%%/*} $(head -1 "$file") $tag_info"
 	fi
 done
 
