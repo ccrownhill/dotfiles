@@ -12,6 +12,7 @@ generate_bullet() {
 while read -r isosec_id; do
   echo "$(generate_bullet $isosec_id)"
   insert=$(generate_bullet ${PWD##*/})
+  # insert// means replace all occurrences and then just escapes every / to \/
   perl -0777 -p -i -e "s/Related:\n\n/Related:\n\n${insert//\//\\\/}\n/" "../$isosec_id/README.md"
   first_line="$(head -1 ../$isosec_id/README.md)"
   git add "../$isosec_id/README.md" 1>/dev/null 2>/dev/null

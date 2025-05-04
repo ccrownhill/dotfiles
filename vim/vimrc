@@ -1,21 +1,29 @@
 " load default runtime
 source $VIMRUNTIME/defaults.vim
 
+set number
+set relativenumber
+
 " indentation
 set autoindent
-
-set number
 set tabstop=4
+" to make delete in insert mode treat 4 spaces like a tab, i.e. delete the whole
+" thing
 set softtabstop=4
+" for >> and <<
 set shiftwidth=4
-
 " replace tab with spaces
 set expandtab
-
 " use shiftwidth for tab instead of tabstop
-set smarttab
+"set smarttab
 
+"-------------------------------------------
+" filetype specific indentation settings
 autocmd FileType systemverilog setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+
+" automatically convert tabs to spaces for F# files
+autocmd BufReadPre,BufNewFile *.fs,*.fsx,*.fsproj
+        \ setlocal expandtab
 
 " highlight search results
 " deactivate with ':noh'
@@ -41,7 +49,12 @@ set background=dark
 " faster scrolling
 set ttyfast
 
+" make it consistent with D, C
+map Y y$
+
 set noswapfile
+
+let mapleader=","
 
 " show open buffers in tabline at the top
 "set showtabline=1
@@ -50,6 +63,11 @@ if v:version >= 800
 	" prevent automatic folding
 	set foldmethod=manual
 endif
+
+"--------------------------------
+" multiple buffers
+" automatically save when switching to next buffer with :bn, :bp
+set autowrite
 
 " allow sensing the filetype
 filetype plugin on
@@ -64,17 +82,18 @@ endif
 if filereadable(expand("~/.vim/autoload/plug.vim"))
 	" load all plugins
 	call plug#begin('~/.vimplugins')
-	Plug 'vim-pandoc/vim-pandoc'
-	Plug 'rwxrob/vim-pandoc-syntax-simple'
-	Plug 'roxma/vim-tmux-clipboard' " integration of vim and tmux clipboard
-	Plug 'mhinz/vim-signify' " show modified, added and removed lines in sign column with any version control system
-    Plug 'img-paste-devs/img-paste.vim'
-
-	"Plug 'morhetz/gruvbox' " gruvbox colorscheme
+        Plug 'conradirwin/vim-bracketed-paste'
+		Plug 'vim-pandoc/vim-pandoc'
+		Plug 'rwxrob/vim-pandoc-syntax-simple'
+		Plug 'roxma/vim-tmux-clipboard' " integration of vim and tmux clipboard
+		" show modified, added and removed lines in sign column with any version control system
+		Plug 'mhinz/vim-signify'
+		Plug 'img-paste-devs/img-paste.vim'
+		Plug 'dense-analysis/ale'
+        Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+        Plug 'junegunn/fzf.vim'
 	call plug#end()
 
-	"colorscheme gruvbox
-    "
     " enable image pasting in markdown files
     autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
     " there are some defaults for image directory and image name, you can
@@ -92,19 +111,82 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 	let g:pandoc#modules#disabled = ["folding"] " disable folding of headers
 endif
 
+set signcolumn=yes
+hi SignColumn ctermbg=None
+let g:ale_set_signs = 1
+let g:ale_sign_info = '✨'
+let g:ale_sign_error = '🔥'
+let g:ale_sign_warning = '❗️'
+let g:ale_sign_hint = '💡'
+
+" remove background from signs
+hi ALEErrorSign ctermbg=None
+hi ALEWarningSign ctermbg=None
+hi ALEInfoSign ctermbg=None
+hi ALEErrorSign ctermbg=None
+hi ALEStyleWarningSign ctermbg=None
+
+" only if a linter is present change these mappings
+function ALELSPMappings()
+	let l:lsp_found=0
+    for l:linter in ale#linter#Get(&filetype)
+        if !empty(l:linter.lsp) && ale#lsp_linter#CheckWithLSP(bufnr(''), l:linter)
+                let l:lsp_found = 1
+                break
+            endif
+        endfor
+	if (l:lsp_found)
+        nnoremap <silent> gd :ALEGoToDefinition<CR>
+        nnoremap <silent> gi :ALEGoToImplementation<CR>
+        nnoremap <silent> gt :ALEGoToTypeDefinition<CR>
+        nnoremap <silent> gf :ALEFindReferences<CR>
+        " just in case the original K is needed even if there is a linter
+        " which may be the case because its output is often different
+        nnoremap <silent> <leader>k K
+        nnoremap <silent> K :ALEHover<CR>
+        " note the space after ALESymbolSearch
+        nnoremap <C-s> :ALESymbolSearch 
+	else
+		silent! unmap <silent> gd
+		silent! unmap <silent> gi
+		silent! unmap <silent> gt
+		silent! unmap <silent> gf
+		silent! unmap <silent> K
+        nnoremap <C-s> :echoerr "no linter present"<CR>
+	endif
+endfunction
+autocmd BufRead,FileType * call ALELSPMappings()
+
+" vim-signify color config
+hi SignifySignAdd ctermbg=None ctermfg=green
+hi SignifySignChange ctermbg=None ctermfg=yellow
+hi SignifySignChangeDelete ctermbg=None ctermfg=yellow
+hi SignifySignDelete ctermbg=None ctermfg=red
+
+" for setting up fzf
+" ripgrep search
+nnoremap <C-h> :Rg<CR>
+" ctrl-p fuzzy file search
+nnoremap <C-j> :Files<CR>
+" for finding only files not in .gitignore
+nnoremap <C-k> :GFiles<CR>
+
+" ale auto-completion
+let g:ale_completion_enabled = 1
+set omnifunc=ale#completion#OmniFunc
+
 " automatically format go files with gofmt on save
 autocmd VimLeavePre *.go silent !gofmt -w %
 
-" automatically convert tabs to spaces for F# files
-autocmd BufReadPre,BufNewFile *.fs,*.fsx,*.fsproj
-        \ setlocal expandtab
 
 " disable search highlighting with <C-L> when refreshing screen
 nnoremap <C-L> :nohl<CR><C-L>
 
-" switch line number display on and off with <F1> (for relative linenumbers
-" you need to use ':set relativenumber!'
-map <F1> :set number!<CR>
+map <leader>r :set relativenumber!<CR>
+hi LineNr ctermbg=None ctermfg=grey
 
+nnoremap <silent> <leader>v :set paste<CR>
+nnoremap <silent> <leader>c :set nopaste<CR>
+set pastetoggle=<F9>
 " make m a shortcut for :w
 "nnoremap m :w<CR>

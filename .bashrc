@@ -178,7 +178,7 @@ zetnew () {
 zetjup () {
 	if [ ! -e "$1" ]; then
 		echo "Usage: zetfromjup <jupyter notebook file>"
-		exit 1
+		return 1
 	fi
 
 	oldpwd="$PWD"
@@ -193,6 +193,27 @@ zetjup () {
 	cd "$newd"
 	zetpush
 	cd "$oldpwd"
+}
+
+vf () {
+    vi -c ":Files"
+}
+
+
+vgrep () {
+    vi -c ":Rg"
+}
+
+vgitf () {
+    vi -c ":GFiles"
+}
+
+vic () {
+	if [ $# -lt 1 ]; then
+		echo "Usage: vic <file>"
+        return 1
+	fi
+    vi -c ":set path+=./**" -c ":find $1"
 }
 
 export -f pyenv_create pyenv_activate pyenv_destroy zetnew
