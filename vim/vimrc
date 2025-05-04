@@ -54,7 +54,7 @@ map Y y$
 
 set noswapfile
 
-let mapleader=","
+let mapleader=" "
 
 " show open buffers in tabline at the top
 "set showtabline=1
@@ -156,6 +156,11 @@ function ALELSPMappings()
 	endif
 endfunction
 autocmd BufRead,FileType * call ALELSPMappings()
+
+" for navigating between ALE errors/warnings
+nnoremap <leader>n :lnext<CR>
+nnoremap <leader>p :lprevious<CR>
+nnoremap <leader>g :lrewind<CR>
 
 " vim-signify color config
 hi SignifySignAdd ctermbg=None ctermfg=green
