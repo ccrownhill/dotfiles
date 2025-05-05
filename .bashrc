@@ -210,7 +210,7 @@ vgitf () {
 
 vic () {
     if [ -n "$COMP_LINE" ]; then
-        prefix=$(echo $COMP_LINE | cut -d " " -f 2)
+        prefix=$(echo "$COMP_LINE" | cut -d " " -f 2)
         ls -1 ./** 2>/dev/null | grep ^$prefix
         return 0
     fi
