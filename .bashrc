@@ -209,12 +209,20 @@ vgitf () {
 }
 
 vic () {
+    if [ -n "$COMP_LINE" ]; then
+        prefix=$(echo $COMP_LINE | cut -d " " -f 2)
+        ls -1 ./** 2>/dev/null | grep ^$prefix
+        return 0
+    fi
 	if [ $# -lt 1 ]; then
 		echo "Usage: vic <file>"
         return 1
 	fi
+
     vi -c ":set path+=./**" -c ":find $1"
 }
+
+complete -C vic vic
 
 export -f pyenv_create pyenv_activate pyenv_destroy zetnew
 
